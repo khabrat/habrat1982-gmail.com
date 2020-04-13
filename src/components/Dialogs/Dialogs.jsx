@@ -5,27 +5,28 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
 
-const Dialogs = (props) => {
-
-    let dialogsElements  =  props.state.dialogs
+const Dialogs = (props) => {  
+    
+    let state  =  props.dialogs.dialogsPage;
+    let dialogsElements  =  state.dialogs
     .map( d =>  <DialogItem name={d.name} id={d.id} />);
     // console.log(props.state.newMessText)
-    let messagesElements  =  props.state.messages.map( m => <Message  message={m.message} />);
+    let messagesElements  =  state.messages.map( m => <Message  message={m.message} />);
     
 
   
 
-    let newPostElement = React.createRef();
+    // let newPostElement = React.createRef();
 
-    
+ 
     let addMess = () => {            
-        props.dispatch(addMessActionCreator())
+        props.addMess()
     } 
     
 
-    let onMessChange = () => {
-        let text1 = newPostElement.current.value;
-        props.dispatch(updateNewMessTextActionCreator(text1))
+    let onMessChange = (e) => {
+        let text1 = e.target.value;
+        props.updateNewMessText(text1)
 
     }
 
@@ -41,8 +42,8 @@ const Dialogs = (props) => {
             </div>
 
             <div>
-                <div><textarea ref={newPostElement} cols="60" rows="10" 
-                value={props.state.newMessText}
+                <div><textarea cols="60" rows="10" 
+                value={state.newMessText}
                 onChange={onMessChange} 
                 
                /></div>

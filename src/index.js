@@ -1,25 +1,32 @@
 import * as serviceWorker from './serviceWorker';
-import store from './redux/state';
+import store from './redux/redux-store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 // import {addPost, updateNewPostText, addMessages, updateNewMessText, subscribe} from './redux/state';
 import {BrowserRouter, Route} from 'react-router-dom';
+import StoreContext from './StoreContext';
 
 
 let rerenderEntireTree = (state) => {
+    
 
     ReactDOM.render(
-        <BrowserRouter>
-            <App state={state} dispatch={store.dispatch.bind(store)}/>
-        </BrowserRouter>
+       <StoreContext.Provider>
+            <BrowserRouter>
+                <App state={state} dispatch={store.dispatch.bind(store)}  store = {store}/>
+            </BrowserRouter>
+       </StoreContext.Provider>
         , document.getElementById('root'));
 
 }
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree);
+store.subscribe(() => {
+    let state = store.getState();
+    rerenderEntireTree(state);
+});
 
 
 

@@ -3,15 +3,17 @@ import './App.css';
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
+import DialogsContainer from './components/Dialogs/Dialogs-container';
 import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Frends from './components/Frends/Frends';
-import {BrowserRouter, Route} from 'react-router-dom';
+import { Route} from 'react-router-dom';
 
 
 const App = (props) => {
+  
+  // debugger
  
   return (
 
@@ -20,12 +22,10 @@ const App = (props) => {
       <Nav />
       <div className='app-wrapper-content'>
         <Route exact path="/dialogs" render={() => 
-        <Dialogs state={props.state.dialogsPages} 
-        dispatch = {props.dispatch}
+        <DialogsContainer store = {props.store}
         />} />
         <Route exact path="/profile" render={() =>
-         <Profile profilePage={props.state.profilePage}
-          dispatch={props.dispatch}          
+         <Profile store = {props.store}
         />} />
         <Route exact path="/settings" render={() => <Settings />} />
         <Route exact path="/music" render={() => <Music />} />
@@ -36,6 +36,9 @@ const App = (props) => {
 
   );
 }
+
+
+
 
 
 export default App;
